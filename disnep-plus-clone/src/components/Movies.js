@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context'
+import { Link } from 'react-router-dom'
 
 function Movies() {
     const {movies} = useGlobalContext();
@@ -12,7 +13,9 @@ function Movies() {
                     const {id, title, image} = movie;
                     return (
                         <Wrapper key={id}>
-                            <img src={image} alt={title} />
+                            <Link to={`/detail/${id}`}>
+                                <img src={image} alt={title} />
+                            </Link>
                         </Wrapper>
                     )
                 })}

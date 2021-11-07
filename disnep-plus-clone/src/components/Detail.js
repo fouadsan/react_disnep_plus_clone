@@ -1,15 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
+import { useParams, useNavigate } from 'react-router-dom'
+import db from '../firebase'
 
 function Detail() {
+    const [singleMovie, setSingleMovie] = useState({});
+    const {id} = useParams();
+     const history = useNavigate()
+
+    useEffect(() => {
+        // Grab the movie info from db
+        db.collection("movies")
+        .doc(id)
+        .get()
+        .then((doc) => {
+            if (doc.exists) {
+                // save the movie data
+                setSingleMovie(doc.data())
+            } else {
+                // redirect to home page
+                history.push("/");
+            }
+        })
+    }, [id])
+
+    const {subtitle, backgroundImg, description} = singleMovie
+
     return (
         <Container>
             <Background>
-                <img 
-                    src="https://store-images.s-microsoft.com/image/apps.9585.69479559702140610.dad571dd-6b2c-42a6-be9e-fd11d891d66c.b640dda6-99fd-45d1-b7f1-a54f914615d6" 
-                    alt=""
-                />
+                <img  src={backgroundImg} alt="" />
             </Background>
             <ImageTitle>
                 <img src ="/images/viewers-pixar.png" alt="" />
@@ -31,10 +51,10 @@ function Detail() {
                 </GroupWatchButton>
             </Controls>
             <SubTitle>
-                2018 * 7m * Family, Fantasy, Kids, Animation
+                {subtitle}
             </SubTitle>
             <Description>
-                Lorem Ipsum est un texte d'espace réservé couramment utilisé dans les industries graphique, imprimée et éditoriale pour prévisualiser les mises en page et les maquettes visuelles.
+                {description}
             </Description>
         </Container>
     )
