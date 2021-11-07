@@ -7,6 +7,10 @@ function Login() {
             <CTA>
                 <CTALogoOne src="/images/cta-logo-one.svg" />
                 <SignUp>GET ALL THERE</SignUp>
+                <Description>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
+                </Description>
+                <CTALogoOne src="/images/cta-logo-two.png" />
             </CTA>
         </Container>
     )
@@ -16,7 +20,7 @@ const Container = styled.div`
     position: relative;
     height: calc(100vh - 70px);
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
 
     &::before {
@@ -30,6 +34,7 @@ const Container = styled.div`
         background-size: cover;
         background-repeat: no-repeat;
         background-image: url('/images/login-background.jpg');
+        opacity: 0.7;
         z-index: -1;
     }
 `
@@ -37,9 +42,10 @@ const Container = styled.div`
 const CTA = styled.div`
     max-width: 650px;
     padding: 80px 40px;
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
+    margin-top: 100px;
 `
 
 const CTALogoOne = styled.img`
@@ -64,6 +70,17 @@ const SignUp = styled.a`
     &:hover {
         background-color: #0483ee;
     }
+`
+
+const Description = styled.p`
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-align: center;
+    line-height: 1.5;
+`
+
+const CTALogoTwo = styled.image`
+    width: 90%;
 `
 
 export default Login

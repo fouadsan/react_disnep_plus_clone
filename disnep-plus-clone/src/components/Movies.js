@@ -1,35 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useGlobalContext } from '../context'
 
 function Movies() {
+    const {movies} = useGlobalContext();
     return (
         <Container>
             <h4>Recommended For You</h4>
             <Content>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
-                <Wrapper>
-                    <img src="https://fr.web.img5.acsta.net/pictures/20/10/01/11/26/1905965.jpg" alt="" />
-                </Wrapper>
+                {movies && movies.map((movie) => {
+                    const {id, title, image} = movie;
+                    return (
+                        <Wrapper key={id}>
+                            <img src={image} alt={title} />
+                        </Wrapper>
+                    )
+                })}
             </Content>
         </Container>
     )
