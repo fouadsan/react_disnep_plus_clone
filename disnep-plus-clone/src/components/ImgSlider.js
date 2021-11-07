@@ -17,12 +17,12 @@ function ImgSlider() {
 
     return (
         <Carousel  {...settings}>
-            <Wrap>
+            <Wrapper>
                 <img src="/images/slider-badging.jpg" alt="" />
-            </Wrap>
-            <Wrap>
+            </Wrapper>
+            <Wrapper>
                 <img src="/images/slider-badag.jpg" alt="" />
-            </Wrap>
+            </Wrapper>
         </Carousel>
     )
 }
@@ -53,7 +53,7 @@ const Carousel = styled(Slider)`
     }
 `
 
-const Wrap = styled.div`
+const Wrapper = styled.div`
 cursor: pointer;
     img {
         border: 4px solid transparent;
