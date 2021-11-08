@@ -1,38 +1,100 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { auth, provider } from '../firebase'
+import { signInWithPopup, signOut  } from "firebase/auth";
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '../context'
 
 function Header() {
+    const {user, setUser} = useGlobalContext();
+    const history = useNavigate();
+
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                setUser({
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                    isLogin: true
+                })
+            }
+        })
+    }, [])
+
+    const signIn = () => {
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            console.log(result);
+            const user = result.user;
+            setUser({
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL,
+                isLogin: true
+            })
+            history.push("/");
+            // ...
+        }).catch((error) => {
+            console.log("Something went wrong");
+        });
+    }
+
+    const signout = () => {
+        signOut(auth)
+        .then(() => {
+            setUser({
+                name: "",
+                email: "",
+                photo: "",
+                isLogin: false
+            })
+            history.push("/login");
+        }).catch((error) => {
+            console.log("Something went wrong");
+        })
+    }
+
     return (
         <Nav>
             <Logo src="/images/logo.svg" alt="" />
-            <NavMenu>
-                <a>
-                    <img src="/images/home-icon.svg" alt="" />
-                    <span>HOME</span>
-                </a>
-                <a>
-                    <img src="/images/SEARCH-icon.svg" alt="" />
-                    <span>SEARCH</span>
-                </a>
-                <a>
-                    <img src="/images/watchlist-icon.svg" alt="" />
-                    <span>WATCHLIST</span>
-                </a>
-                <a>
-                    <img src="/images/original-icon.svg" alt="" />
-                    <span>ORIGINALS</span>
-                </a>
-                <a>
-                    <img src="/images/movie-icon.svg" alt="" />
-                    <span>MOVIES</span>
-                </a>
-                <a>
-                    <img src="/images/series-icon.svg" alt="" />
-                    <span>SERIES</span>
-                </a>
-
-            </NavMenu>
-            <UserImg src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png" />
+            {!user.isLogin ?
+            <LoginContainer>
+                <Login onClick={signIn}>Login</Login>
+            </LoginContainer> :
+                <>
+                    <NavMenu>
+                        <a>
+                            <img src="/images/home-icon.svg" alt="" />
+                            <span>HOME</span>
+                        </a>
+                        <a>
+                            <img src="/images/SEARCH-icon.svg" alt="" />
+                            <span>SEARCH</span>
+                        </a>
+                        <a>
+                            <img src="/images/watchlist-icon.svg" alt="" />
+                            <span>WATCHLIST</span>
+                        </a>
+                        <a>
+                            <img src="/images/original-icon.svg" alt="" />
+                            <span>ORIGINALS</span>
+                        </a>
+                        <a>
+                            <img src="/images/movie-icon.svg" alt="" />
+                            <span>MOVIES</span>
+                        </a>
+                        <a>
+                            <img src="/images/series-icon.svg" alt="" />
+                            <span>SERIES</span>
+                        </a>
+                    </NavMenu>
+                    <UserImg
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                     onClick={signout}
+                     />
+                </>    
+            }
         </Nav>
     )
 }
@@ -48,8 +110,31 @@ const Nav = styled.nav`
     overflow-x: hidden;
 `
 
+const LoginContainer = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+`
+
 const Logo = styled.img`
     width: 80px;
+`
+
+const Login = styled.div`
+    border: 1px solid #f9f9f9;
+    padding: 8px 16px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease 0s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
 `
 
 const NavMenu = styled.div`

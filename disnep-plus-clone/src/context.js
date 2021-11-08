@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react'
 import db from './firebase'
 
+const initialState = {
+  name: "",
+  email: "",
+  photo: "",
+  isLogin: false
+}
+
+
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
     const [movies, setMovies] = useState([]);
+    const [user, setUser] = useState(initialState);
 
     useEffect(() => {
         db.collection("movies").onSnapshot((snapshot) => {
@@ -16,7 +25,9 @@ const AppProvider = ({ children }) => {
     }, [])
 
     return <AppContext.Provider value={{
-        movies
+        movies,
+        user,
+        setUser
     }}>{children}</AppContext.Provider>
 }
 // make sure use

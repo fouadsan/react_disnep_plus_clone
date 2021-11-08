@@ -6,7 +6,7 @@ import db from '../firebase'
 function Detail() {
     const [singleMovie, setSingleMovie] = useState({});
     const {id} = useParams();
-     const history = useNavigate()
+    const history = useNavigate()
 
     useEffect(() => {
         // Grab the movie info from db
