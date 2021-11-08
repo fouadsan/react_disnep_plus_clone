@@ -51,16 +51,23 @@ const Carousel = styled(Slider)`
     button {
         z-index: 1;
     }
+    .slick-prev {
+        left: 0;
+    }
+    .slick-next {
+        right: 0;
+    }
 `
 
 const Wrapper = styled.div`
 cursor: pointer;
     img {
+        padding: 0;
         border: 4px solid transparent;
         border-radius: 4px;
         width: 100%;
         height: 100%;
-        box-shadow: rgb(0 0 0 /69%) 0px 26px 30px -10px,
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
         rgb(0 0 0 / 73%) 0px 16px 10px -10px;
         transition-duration: 300ms;
 

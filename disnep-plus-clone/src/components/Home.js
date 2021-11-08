@@ -27,7 +27,7 @@ const Container = styled.main`
     margin-left: auto;
 
     &:before {
-        background: url("/images/home-background.png") center center / cover 
+        // background: url("/images/home-background.png") center center / cover; 
         no-repeat fixed;
         content: "";
         position: absolute;

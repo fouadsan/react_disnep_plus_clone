@@ -6,54 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context'
 
 function Header() {
-    const {user, setUser} = useGlobalContext();
+    const {user, setUser, signIn, signout} = useGlobalContext();
     const history = useNavigate();
-
-    useEffect(() => {
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                setUser({
-                    name: user.displayName,
-                    email: user.email,
-                    photo: user.photoURL,
-                    isLogin: true
-                })
-            }
-        })
-    }, [])
-
-    const signIn = () => {
-        signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log(result);
-            const user = result.user;
-            setUser({
-                name: user.displayName,
-                email: user.email,
-                photo: user.photoURL,
-                isLogin: true
-            })
-            history.push("/");
-            // ...
-        }).catch((error) => {
-            console.log("Something went wrong");
-        });
-    }
-
-    const signout = () => {
-        signOut(auth)
-        .then(() => {
-            setUser({
-                name: "",
-                email: "",
-                photo: "",
-                isLogin: false
-            })
-            history.push("/login");
-        }).catch((error) => {
-            console.log("Something went wrong");
-        })
-    }
 
     return (
         <Nav>
@@ -90,7 +44,7 @@ function Header() {
                         </a>
                     </NavMenu>
                     <UserImg
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                     src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png"
                      onClick={signout}
                      />
                 </>    
